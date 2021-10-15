@@ -23,30 +23,42 @@ struct ContentView: View {
         
         return amountPerPerson
     }
+    var total: Double {
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        let orderAmount = Double(checkAmount) ?? 0
+        
+        let tipValue = orderAmount / 100 * tipSelection
+        let grandTotal = orderAmount + tipValue
+        
+        return grandTotal
+    }
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Amount", text: $checkAmount).keyboardType(.decimalPad)
+                    TextField("Quantia em Reais", text: $checkAmount).keyboardType(.decimalPad)
                 }
                 Section{
-                    Picker("Number of people", selection: $numberOfPeople) {
+                    Picker("Número de pessoas", selection: $numberOfPeople) {
                         ForEach(2..<100) {
-                            Text("\($0) people")
+                            Text("\($0) pessoas")
                         }
                     }
                 }
-                Section(header: Text("How much tip do you want to leave?")) {
-                    Picker("Tip percentage", selection: $tipPercentage) {
+                Section(header: Text("Quanta gorjeta você quer deixar?")) {
+                    Picker("Porcentagem de gorjeta", selection: $tipPercentage) {
                         ForEach(0 ..< tipPercentages.count) {
                             Text("\(self.tipPercentages[$0])%")
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
-                Section {
+                Section(header: Text("Valor por pessoa")) {
                     Text("R$ \(totalPerPerson, specifier: "%.2f")")
+                }
+                Section(header: Text("Valor total")) {
+                    Text("R$ \(total, specifier: "%.2f")")
                 }
             }.navigationBarTitle("WeSplit")
         }
@@ -56,5 +68,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 11")
     }
 }
