@@ -12,12 +12,18 @@ extension View {
     func watermarked(with text: String) -> some View {
         modifier(Watermark(text: text))
     }
+    
+    func isTitle() -> some View {
+        modifier(TitleContainer())
+    }
 }
 
 @available(iOS 15.0, *)
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 10) {
+            Text("Title")
+                .isTitle()
             Color.blue
                 .frame(width: 300, height: 200)
                 .watermarked(with: "Hacking with Swift - Roger")
@@ -39,6 +45,22 @@ struct Watermark: ViewModifier {
                 .padding(5)
                 .background(.black)
         }
+    }
+}
+
+@available(iOS 15.0, *)
+struct TitleContainer: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        VStack {
+            content
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+        .background(.black)
+        .foregroundStyle(.primary)
     }
 }
 
