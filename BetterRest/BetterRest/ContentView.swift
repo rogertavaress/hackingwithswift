@@ -9,6 +9,36 @@ import CoreML
 import SwiftUI
 
 struct ContentView: View {
+    @State private var sleepAmount = 8.0
+    @State private var wakeUp = defaultWakeTime
+    @State private var coffeeAmount = 1
+    
+    var body: some View {
+        NavigationView{
+            Form {
+                Section(header: Text("Quando você quer acordar?")) {
+                    DatePicker("Insira uma data", selection: $wakeUp, displayedComponents: .hourAndMinute).labelsHidden()
+                }
+                Section(header: Text("Quantidade desejada de sono")) {
+                    Stepper("\(sleepAmount.formatted()) horas", value: $sleepAmount, in: 4...12, step: 0.25)
+                }
+                Section(header: Text("Consumo diário de café") ) {
+                    Picker(coffeeAmount == 1 ? "1 xícara" : "\(coffeeAmount) xícaras", selection: $coffeeAmount) {
+                        ForEach(1...20, id: \.self) {
+                            Text("\($0)")
+                        }
+                    }
+                }
+                if(calculateBedtime.count > 0){
+                    Section(header: Text("Resultado")) {
+                        Text("\(calculateBedtime)").font(.largeTitle).fontWeight(.heavy)
+                    }
+                }
+            }
+            .navigationTitle("BetterRest")
+        }
+    }
+    
     static var defaultWakeTime: Date {
         var components = DateComponents()
         components.hour = 7
@@ -16,44 +46,7 @@ struct ContentView: View {
         return Calendar.current.date(from: components) ?? Date.now
     }
     
-    @State private var sleepAmount = 8.0
-    @State private var wakeUp = defaultWakeTime
-    @State private var coffeeAmount = 1
-    
-    @State private var alertTitle = ""
-    @State private var alertMessage = ""
-    @State private var showingAlert = false
-    
-    var body: some View {
-        NavigationView{
-            Form {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("When do you want to wake up?").font(.headline)
-                    DatePicker("Insira uma data", selection: $wakeUp, displayedComponents: .hourAndMinute).labelsHidden()
-                }
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Quantidade desejada de sono").font(.headline)
-                    Stepper("\(sleepAmount.formatted()) horas", value: $sleepAmount, in: 4...12, step: 0.25)
-                }
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Consumo diário de café").font(.headline)
-                    Stepper(coffeeAmount == 1 ? "1 xícara" : "\(coffeeAmount) xícaras", value: $coffeeAmount, in: 1...20)
-                }
-            }
-            .padding()
-            .navigationTitle("BetterRest")
-            .toolbar {
-                Button("Calcular", action: calculateBedtime)
-            }
-            .alert(alertTitle, isPresented: $showingAlert) {
-                Button("OK") {}
-            } message: {
-                Text(alertMessage)
-            }
-        }
-    }
-    
-    func calculateBedtime() {
+    var calculateBedtime: String {
         do{
             let config = MLModelConfiguration()
             let model = try SleepCalculator(configuration: config)
@@ -64,13 +57,11 @@ struct ContentView: View {
             let prediction = try model.prediction(wake: Double(hour + minute), estimatedSleep: sleepAmount, coffee: Double(coffeeAmount))
             
             let sleepTime = wakeUp - prediction.actualSleep
-            alertTitle = "Your ideal bedtime is…"
-            alertMessage = sleepTime.formatted(date: .omitted, time: .shortened)
+            
+            return sleepTime.formatted(date: .omitted, time: .shortened)
         } catch {
-            alertTitle = "Error"
-            alertMessage = "Sorry, there was a problem calculating your bedtime."
+            return ""
         }
-        showingAlert = true
     }
 }
 
