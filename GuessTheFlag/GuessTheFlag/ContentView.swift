@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     @State private var descriptionAlert = ""
+    @State private var buttonTapped: Int? = nil
     
     var body: some View {
         ZStack {
@@ -38,11 +39,11 @@ struct ContentView: View {
                             .font(.largeTitle.weight(.semibold))
                     }
                     ForEach(0..<3) { number in
-                        Button {
+                        FlagButton(source: countries[number], number: number) {
                             flagTapped(number)
-                        } label: {
-                            FlagImage(source: countries[number])
                         }
+                        .opacity(buttonTapped != nil && buttonTapped != number ? 0.25 : 1)
+                        .animation(.easeInOut, value: buttonTapped)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -66,11 +67,12 @@ struct ContentView: View {
         }.alert("Fim de Jogo!", isPresented: $showingEndScore) {
             Button("Reiniciar", action: reset)
         } message: {
-        Text("Você terminou o jogo com \(score) pontos")
+            Text("Você terminou o jogo com \(score) pontos")
         }
     }
     
     func flagTapped(_ number: Int) {
+        buttonTapped = number
         if number == correctAnswer {
             scoreTitle = "Acertou"
             score += 1
@@ -92,6 +94,7 @@ struct ContentView: View {
         round += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        buttonTapped = nil
     }
     
     func reset() {
@@ -99,17 +102,28 @@ struct ContentView: View {
         score = 0
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        buttonTapped = nil
     }
 }
 
-struct FlagImage: View {
+struct FlagButton: View {
     var source: String
+    var number: Int
+    var action: () -> Void
+    @State private var degrees = 0.0
     
     var body: some View {
-        Image(source)
-            .renderingMode(.original)
-            .clipShape(Capsule())
-            .shadow(radius: 5)
+        Button {
+            withAnimation(.easeInOut) {
+                degrees += 360
+            }
+            self.action()
+        } label: {
+            Image(source)
+                .renderingMode(.original)
+                .clipShape(Capsule())
+                .shadow(radius: 5)
+        }.rotation3DEffect(.degrees(degrees), axis: (x: 0, y: 1, z: 0))
     }
 }
 
