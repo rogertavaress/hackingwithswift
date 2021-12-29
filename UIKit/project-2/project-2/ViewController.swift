@@ -36,6 +36,16 @@ class ViewController: UIViewController {
         button3.layer.borderColor = UIColor.lightGray.cgColor
         
         askQuestion()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(showScore))
+    }
+    
+    @objc func showScore() {
+        let alertController = UIAlertController(title: "Score", message: score.formatted(), preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Close", style: .cancel))
+        
+        present(alertController, animated: true)
     }
 
     func askQuestion(action: UIAlertAction! = nil) {
@@ -52,7 +62,7 @@ class ViewController: UIViewController {
     }
     
     func updateTitle() {
-        title = "\(countries[correctAnswer].uppercased()) - Score: \(score) - Round: \(round)"
+        title = "\(countries[correctAnswer].uppercased()) - Round: \(round)"
     }
     
     func getTitle(_ answer: Answer) -> String {
