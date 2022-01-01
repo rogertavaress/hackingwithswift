@@ -10,9 +10,10 @@ import WebKit
 
 class ViewController: UIViewController, WKNavigationDelegate {
     
+    var tableviewDelegate: TableViewControllerDelegate!
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "hackingwithswift.com", "github.com/rogertavaress", "rogeriotavares.dev"]
+    var initWebSite: WebSiteModel!
     
     override func loadView() {
         webView = WKWebView()
@@ -25,6 +26,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         
@@ -32,11 +35,13 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        let forward = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward))
+        let goBack = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack))
         
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [progressButton, spacer, goBack, forward, refresh]
         navigationController?.isToolbarHidden = false
         
-        let url = URL(string: websites[0])!
+        let url = initWebSite.url
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
@@ -52,8 +57,8 @@ class ViewController: UIViewController, WKNavigationDelegate {
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
         
-        for website in websites {
-            ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
+        for website in tableviewDelegate.websites {
+            ac.addAction(UIAlertAction(title: website.link, style: .default, handler: openPage))
         }
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -61,11 +66,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
         present(ac, animated: true)
     }
     
-    func openPage(action: UIAlertAction) {
-        guard let title = action.title,
-              let url = URL(string: "https://\(title)")
-        else { return }
-        webView.load(URLRequest(url: url))
+    func openPage(alert: UIAlertAction) {
+        guard let webSiteItem = tableviewDelegate.websites.first(where: { item in
+            return item.link == alert.title
+        }) else { return }
+        
+        webView.load(URLRequest(url: webSiteItem.url))
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -76,15 +82,23 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let url = navigationAction.request.url
         
         if let host = url?.host {
-            for website in websites {
-                if host.contains(website) {
+            for website in tableviewDelegate.websites {
+                if host.contains(website.link) {
                     decisionHandler(.allow)
                     return
                 }
             }
+        } else {
+            decisionHandler(.cancel)
+            return
         }
         
-        decisionHandler(.cancel)
+        let alertController = UIAlertController(title: "Error", message: "Wrong page", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Go back", style: .cancel, handler: { _ in
+            decisionHandler(.cancel)
+        }))
+        
+        present(alertController, animated: true)
     }
 }
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9EE37F7C2780A84C00DDED63 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE37F7B2780A84C00DDED63 /* TableViewController.swift */; };
+		9EE37F7E2780AB9D00DDED63 /* WebSiteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE37F7D2780AB9D00DDED63 /* WebSiteModel.swift */; };
 		9EEF1EAE277E0682006CF522 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEF1EAD277E0682006CF522 /* AppDelegate.swift */; };
 		9EEF1EB0277E0682006CF522 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEF1EAF277E0682006CF522 /* SceneDelegate.swift */; };
 		9EEF1EB2277E0682006CF522 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEF1EB1277E0682006CF522 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9EE37F7B2780A84C00DDED63 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		9EE37F7D2780AB9D00DDED63 /* WebSiteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSiteModel.swift; sourceTree = "<group>"; };
 		9EEF1EAA277E0682006CF522 /* project-4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-4.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EEF1EAD277E0682006CF522 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9EEF1EAF277E0682006CF522 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 				9EEF1EAD277E0682006CF522 /* AppDelegate.swift */,
 				9EEF1EAF277E0682006CF522 /* SceneDelegate.swift */,
 				9EEF1EB1277E0682006CF522 /* ViewController.swift */,
+				9EE37F7B2780A84C00DDED63 /* TableViewController.swift */,
+				9EE37F7D2780AB9D00DDED63 /* WebSiteModel.swift */,
 				9EEF1EB3277E0682006CF522 /* Main.storyboard */,
 				9EEF1EB6277E0684006CF522 /* Assets.xcassets */,
 				9EEF1EB8277E0684006CF522 /* LaunchScreen.storyboard */,
@@ -141,6 +147,8 @@
 				9EEF1EB2277E0682006CF522 /* ViewController.swift in Sources */,
 				9EEF1EAE277E0682006CF522 /* AppDelegate.swift in Sources */,
 				9EEF1EB0277E0682006CF522 /* SceneDelegate.swift in Sources */,
+				9EE37F7C2780A84C00DDED63 /* TableViewController.swift in Sources */,
+				9EE37F7E2780AB9D00DDED63 /* WebSiteModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
