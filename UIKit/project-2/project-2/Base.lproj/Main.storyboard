@@ -11,13 +11,16 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="project_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="project_6" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fo3-oF-KnV">
                                 <rect key="frame" x="107" y="100" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fo3-oF-KnV" secondAttribute="height" multiplier="2:1" id="g2Q-9J-iVo"/>
+                                </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="" image="us">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
@@ -28,6 +31,9 @@
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-tI-nFw">
                                 <rect key="frame" x="107" y="360" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xq8-tI-nFw" secondAttribute="height" multiplier="2:1" id="89H-og-Me4"/>
+                                </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="us"/>
                                 <connections>
@@ -36,6 +42,9 @@
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-dF-P3s">
                                 <rect key="frame" x="107" y="230" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="eoZ-dF-P3s" secondAttribute="height" multiplier="2:1" id="rC3-mH-wGr"/>
+                                </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="us"/>
                                 <connections>
@@ -47,11 +56,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="eoZ-dF-P3s" firstAttribute="centerX" secondItem="fo3-oF-KnV" secondAttribute="centerX" id="5BL-i8-1Uf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xq8-tI-nFw" secondAttribute="bottom" constant="20" id="C6G-Cm-npv"/>
                             <constraint firstItem="xq8-tI-nFw" firstAttribute="top" secondItem="eoZ-dF-P3s" secondAttribute="bottom" constant="30" id="CUX-rb-seO"/>
+                            <constraint firstItem="eoZ-dF-P3s" firstAttribute="height" secondItem="fo3-oF-KnV" secondAttribute="height" id="Lxj-Ix-BsB"/>
                             <constraint firstItem="fo3-oF-KnV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="MI0-Zn-QaD"/>
                             <constraint firstItem="xq8-tI-nFw" firstAttribute="centerX" secondItem="eoZ-dF-P3s" secondAttribute="centerX" id="Qxo-Hr-2wp"/>
                             <constraint firstItem="eoZ-dF-P3s" firstAttribute="top" secondItem="fo3-oF-KnV" secondAttribute="bottom" constant="30" id="b8z-wA-ZcD"/>
                             <constraint firstItem="fo3-oF-KnV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="dOD-x1-2sQ"/>
+                            <constraint firstItem="xq8-tI-nFw" firstAttribute="height" secondItem="eoZ-dF-P3s" secondAttribute="height" id="k4B-Vl-8jq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="p97-pP-4tD"/>
